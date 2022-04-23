@@ -1,6 +1,6 @@
 #Universidad del Valle de Guatemala
 #Mineria de Datos
-#HT5 Naive
+#HT7.1SVM
 #Integrantes
 #Bryann Alfaro
 #Diego de Jesus
