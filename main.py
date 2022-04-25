@@ -270,10 +270,17 @@ x_t = x_test_reg.values
 y_t = y_test_reg.values
 
 tic = time.time()
-svmode_model= SVC(kernel=kernel_choice, C=100, gamma=100.0)
+if kernel_choice == 'linear':
+    svmode_model= SVC(kernel=kernel_choice, C=1, gamma='auto')
+elif kernel_choice == 'rbf':
+    svmode_model= SVC(kernel=kernel_choice, C=10, gamma=10.0)
+else:
+    svmode_model= SVC(kernel=kernel_choice, C=100, gamma=100.0)
 svmode_model.fit(x_tr1, y_tr1)
 y_pred = svmode_model.predict(x_tr1) #entrenamiento
 toc = time.time()
+print(f'Time to process model:', toc - tic)
+
 # graph the SVM lines
 x = x_tr1[:,0]
 y = x_tr1[:,1]
@@ -290,8 +297,6 @@ plt.contourf(xx, yy, Z, cmap=plt.cm.Paired, alpha=0.8)
 plt.scatter(x, y, c=y_tr1, cmap='viridis')
 plt.title('Scatter plot')
 plt.show()
-
-print(f'Time to process model:', toc - tic)
 
 #Analisis VIF de todas
 vif = pd.DataFrame()
