@@ -211,7 +211,7 @@ x = houses_df
 
 x.pop('MasVnrArea')
 x.pop('GarageYrBlt')
-kernel_choice = 'rbf' #linear, rbf ,sigmoid
+kernel_choice = 'linear' #linear, rbf ,sigmoid
 
 '''
 #ANALISIS CON TODAS LAS VARIABLES ANTES DE VIF
@@ -282,20 +282,22 @@ toc = time.time()
 print(f'Time to process model:', toc - tic)
 
 # graph the SVM lines
-x = x_tr1[:,0]
-y = x_tr1[:,1]
-x_min = x.min()
-x_max = x.max()
-y_min = y.min()
-y_max = y.max()
+x1 = x_tr1[:,0]
+y1 = x_tr1[:,1]
+x_min = x1.min()
+x_max = x1.max()
+y_min = y1.min()
+y_max = y1.max()
 h = 1
 xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
 to_predict = np.c_[xx.ravel(), yy.ravel()]
 Z = svmode_model.predict(to_predict)
 Z = Z.reshape(xx.shape)
 plt.contourf(xx, yy, Z, cmap=plt.cm.Paired, alpha=0.8)
-plt.scatter(x, y, c=y_tr1, cmap='viridis')
-plt.title('Scatter plot')
+plt.scatter(x1, y1, c=y_tr1, cmap='viridis')
+plt.title(kernel_choice)
+plt.xlabel(x.columns.values[0])
+plt.ylabel(x.columns.values[1])
 plt.show()
 
 #Analisis VIF de todas
